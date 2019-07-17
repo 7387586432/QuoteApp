@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <title>Quotes</title>
+   </head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <body>
+        <form action='/newquote' method='GET'>
+            <input id=newquote value="newquote" type='submit'>
+        </form>
+        <div class="viewquotes">
+        </div>     
+   </body>
+   <script>
+       $.ajax({
+       type : "get",
+       url : '/get/quotes',
+       contentType : "application/json",
+       dataType : 'json',
+       success : function(data){
+         for(var i = 0 ; i < data.length ; i++){
+            $('.viewquotes').append("<div class='well'><p class='title'>"+data[i].title+"</p><p class='body'>"+data[i].body+"</p><p class='author'> ~ "+data[i].author+"</p><form class='delete' action=/delete/"+data[i]._id+"/quote  method='post'><button class='btn-danger submit'>delete</button></form></div>");
+         }
+       }
+      })
+   </script>  
+</html>
